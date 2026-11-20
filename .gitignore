@@ -1,0 +1,32 @@
+# Environment secrets (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+
+# Python environments and bytecode
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Vendored Linux wheels for Cloud Run --no-build deploys (regenerate locally with uv)
+vendor/
+
+# Local ADK session databases and runtime artifacts
+.adk/
+agents/**/.adk/
+*.db
+*.sqlite
+*.sqlite3
+
+# Local slide generator and private presentation payloads
+slides/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,232 @@
+<!doctype html>
+<!--
+ Copyright 2026 Daniela Petruzalek
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Council of Ancients | Philosophical Deliberation Chamber</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231A73E8'/%3E%3Cpath d='M6 24h20M8 21h16M10 11v10M16 11v10M22 11v10M7 11l9-5 9 5H7z' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#prompt-input">Skip to question composer</a>
+
+  <header class="chamber-header">
+    <div class="brand-cluster">
+      <div class="brand-crest" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="36" height="36" rx="10" class="crest-bg"/>
+          <path d="M8 29.5H32M10 26H30M13 15.5V26M20 15.5V26M27 15.5V26M8.5 15.5L20 9L31.5 15.5H8.5Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="brand-copy">
+        <h1 class="brand-title">Council of Ancients</h1>
+        <p class="brand-subtitle">Live Multi-Agent Philosophical Deliberation on Google ADK</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <div id="armor-shield" class="armor-shield" data-armor-state="active" role="status" aria-live="polite">
+        <svg class="shield-icon" viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+          <path d="M10 2.2L3.8 4.9V9.6C3.8 13.7 6.4 17.3 10 18.4C13.6 17.3 16.2 13.7 16.2 9.6V4.9L10 2.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M7.3 10.1L9.2 12L12.9 8.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="armor-shield-text">Model Armor: Fail-Closed Active</span>
+      </div>
+
+      <span id="api-target-pill" class="api-target-pill" hidden></span>
+
+      <button id="toggle-accordions-btn" type="button" class="header-btn" aria-expanded="true">
+        Collapse All
+      </button>
+
+      <button id="new-session-btn" type="button" class="header-btn">
+        New Session
+      </button>
+
+      <a id="dev-ui-link" href="/dev-ui" class="header-btn header-link">
+        ADK Dev UI
+      </a>
+    </div>
+  </header>
+
+  <main class="chamber-main">
+    <section class="amphitheater-stage" id="amphitheater-stage" data-stage-phase="idle" aria-label="Council Amphitheater Stage">
+      <div class="stage-topbar">
+        <ol class="wave-stepper" id="wave-stepper" aria-label="Deliberation Waves">
+          <li class="wave-step" data-wave="1" data-step-state="idle">
+            <span class="wave-num">1</span>
+            <span class="wave-text">1. Framing</span>
+          </li>
+          <li class="wave-step" data-wave="2" data-step-state="idle">
+            <span class="wave-num">2</span>
+            <span class="wave-text">2. Parallel Openings</span>
+          </li>
+          <li class="wave-step" data-wave="3" data-step-state="idle">
+            <span class="wave-num">3</span>
+            <span class="wave-text" id="wave-3-label">3. Cross-Rebuttals</span>
+          </li>
+          <li class="wave-step" data-wave="4" data-step-state="idle">
+            <span class="wave-num">4</span>
+            <span class="wave-text">4. Synthesis</span>
+          </li>
+        </ol>
+
+        <div class="stage-telemetry">
+          <span id="session-badge" class="telemetry-session">Session: Ready</span>
+          <span id="elapsed-timer" class="telemetry-timer" title="Deliberation elapsed time">0.0s</span>
+        </div>
+      </div>
+
+      <div class="hemicycle">
+        <svg class="hemicycle-arcs" viewBox="0 0 960 280" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M 40 265 A 460 230 0 0 1 920 265" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 7"/>
+          <path d="M 130 265 A 360 175 0 0 1 830 265" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M 240 265 A 245 115 0 0 1 720 265" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+
+        <div class="counselors-arc">
+          <article id="seat-plato" class="council-seat seat-plato" data-seat="plato" data-state="idle">
+            <div class="seat-portrait-wrap">
+              <img
+                class="seat-avatar"
+                src="/static/avatars/plato.jpg"
+                alt="Plato of Athens portrait"
+                width="76"
+                height="76"
+                decoding="async"
+              >
+            </div>
+            <div class="seat-meta">
+              <div class="seat-name">Plato</div>
+              <div class="seat-origin">Athens · Idealism</div>
+              <div class="seat-canon">The Republic · Gorgias · Phaedrus</div>
+            </div>
+            <div class="seat-status-pill" data-role="seat-status">Idle</div>
+          </article>
+
+          <article id="seat-descartes" class="council-seat seat-descartes" data-seat="descartes" data-state="idle">
+            <div class="seat-portrait-wrap">
+              <img
+                class="seat-avatar"
+                src="/static/avatars/descartes.jpg"
+                alt="Rene Descartes portrait"
+                width="76"
+                height="76"
+                decoding="async"
+              >
+            </div>
+            <div class="seat-meta">
+              <div class="seat-name">Rene Descartes</div>
+              <div class="seat-origin">Touraine · Rationalism</div>
+              <div class="seat-canon">Meditations · Discourse on the Method</div>
+            </div>
+            <div class="seat-status-pill" data-role="seat-status">Idle</div>
+          </article>
+
+          <article id="seat-machiavelli" class="council-seat seat-machiavelli" data-seat="machiavelli" data-state="idle">
+            <div class="seat-portrait-wrap">
+              <img
+                class="seat-avatar"
+                src="/static/avatars/machiavelli.jpg"
+                alt="Niccolo Machiavelli portrait"
+                width="76"
+                height="76"
+                decoding="async"
+              >
+            </div>
+            <div class="seat-meta">
+              <div class="seat-name">Niccolo Machiavelli</div>
+              <div class="seat-origin">Florence · Political Realism</div>
+              <div class="seat-canon">The Prince · Discourses on Livy</div>
+            </div>
+            <div class="seat-status-pill" data-role="seat-status">Idle</div>
+          </article>
+        </div>
+
+        <div class="podium-row">
+          <article id="seat-facilitator" class="council-seat seat-facilitator" data-seat="facilitator" data-state="idle">
+            <div class="seat-portrait-wrap">
+              <img
+                class="seat-avatar"
+                src="/static/avatars/facilitator.jpg"
+                alt="The Facilitator portrait"
+                width="68"
+                height="68"
+                decoding="async"
+              >
+            </div>
+            <div class="seat-meta">
+              <div class="seat-name">The Facilitator</div>
+              <div class="seat-origin">Podium · Triage, Framing &amp; Verdict Synthesis</div>
+            </div>
+            <div class="seat-status-pill" data-role="seat-status">Idle</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="composer-panel" aria-label="Convene the Council">
+      <form id="council-form" class="composer-form" novalidate>
+        <label for="prompt-input" class="composer-label">
+          Present a question, dilemma, proverb, or engineering trade-off before the Council
+        </label>
+        <div class="composer-row">
+          <textarea
+            id="prompt-input"
+            name="prompt"
+            class="composer-textarea"
+            rows="2"
+            placeholder="Present any question, dilemma, or decision to the Council..."
+            required
+          ></textarea>
+          <button id="submit-btn" type="submit" class="submit-btn">
+            <span id="submit-btn-text">Convene Council</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section id="error-banner" class="error-banner" role="alert" hidden>
+      <div class="error-banner-body">
+        <strong class="error-banner-title">Backend or Stream Error (Fail-Fast)</strong>
+        <p id="error-banner-message" class="error-banner-message"></p>
+      </div>
+      <button id="error-dismiss-btn" type="button" class="header-btn">Dismiss</button>
+    </section>
+
+    <section id="deliberation-stream" class="deliberation-stream" aria-live="polite" aria-label="Live Deliberation Feed">
+      <div id="empty-chamber" class="empty-chamber">
+        <h2 class="empty-title">The Amphitheater Awaits Your Question</h2>
+        <p class="empty-copy">
+          Enter any dilemma above to convene the Council. Every prompt and every sub-agent response is screened fail-closed by Google Cloud Model Armor as Plato, Rene Descartes, and Niccolo Machiavelli deliberate in parallel waves.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <template id="tpl-emblem-blocked">
+    <svg viewBox="0 0 28 28" width="26" height="26" fill="none" aria-hidden="true">
+      <path d="M14 3L5 6.8V13.4C5 19.1 8.8 24.1 14 25.6C19.2 24.1 23 19.1 23 13.4V6.8L14 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M10.5 10.5L17.5 17.5M17.5 10.5L10.5 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </template>
+</body>
+</html>

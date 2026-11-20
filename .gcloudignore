@@ -1,0 +1,15 @@
+.git/
+.gitignore
+.venv/
+.vscode/
+.env
+.env.example
+.dockerignore
+Dockerfile
+__pycache__/
+*.py[cod]
+deploy/
+slides/
+ARCHITECTURE.md
+README.md
+uv.lock
