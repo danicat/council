@@ -36,12 +36,6 @@ app: FastAPI = get_fast_api_app(
     agents_dir=str(BASE_DIR / "agents"),
     web=True,
     use_local_storage=False,
-    allow_origins=[
-        "http://127.0.0.1:8080",
-        "http://localhost:8080",
-        "http://127.0.0.1:8000",
-        "http://localhost:8000",
-    ],
 )
 
 app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="chamber_static")

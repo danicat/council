@@ -171,7 +171,7 @@ Because the backend emits standard ADK 2.0 `Event`s, the Council Chamber UI (`GE
 ### Frontend Modern Web Standards and `InMemorySessionService` Lifecycle
 
 - **Visual Amphitheater, Light/Dark Mode, and Motion**: 1:1 portraits (`frontend/avatars/*.jpg`) pair with Google Civic tones (`#1A73E8`/`#8AB4F8` for Facilitator, `#E37400`/`#FDD663` for Plato, `#1E8E3E`/`#81C995` for Rene Descartes, `#D93025`/`#F28B82` for Niccolo Machiavelli). CSS sets `<meta name="color-scheme" content="light dark">` and `light-dark()` tokens, animates cards with `@starting-style` and `transition-behavior: allow-discrete` under `prefers-reduced-motion` guards, and styles native `<details>` accordions with `details::details-content` and `interpolate-size: allow-keywords`.
-- **`InMemorySessionService`**: `main.py` calls `get_fast_api_app(agents_dir=AGENTS_DIR, web=True, use_local_storage=False, allow_origins=ALLOWED_ORIGINS)` without `session_service_uri`, selecting `InMemorySessionService` consistently across local runs and Cloud Run while retaining all `facilitator` and sub-agent events inside the active session for multi-turn follow-up questions.
+- **`InMemorySessionService`**: `main.py` calls `get_fast_api_app(agents_dir=str(BASE_DIR / "agents"), web=True, use_local_storage=False)` without `session_service_uri`, selecting `InMemorySessionService` consistently across local runs and Cloud Run while retaining all `facilitator` and sub-agent events inside the active session for multi-turn follow-up questions.
 
 ---
 
